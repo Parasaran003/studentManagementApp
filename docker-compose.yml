@@ -1,0 +1,35 @@
+services:
+  # 1. The PostgreSQL Database Container
+  postgres-db:
+    image: postgres:15-alpine
+    container_name: student-postgres
+    environment:
+      POSTGRES_DB: studentdb
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: password123
+    ports:
+      - "5432:5432" # Maps the container port to your host machine (optional, for tools like pgAdmin)
+    volumes:
+      - postgres-data:/var/lib/postgresql/data # Keeps your data safe even if the container restarts
+
+  # 2. Your Spring Boot Application Container
+  spring-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: studentmanagementapp:0.0.1
+    container_name: student-app
+    ports:
+      - "8080:8080"
+    depends_on:
+      - postgres-db # Ensures the database starts before your app
+    environment:
+      # These variables override your application.properties!
+      # Notice we use 'postgres-db' (the service name) instead of 'localhost'
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres-db:5432/studentdb
+      SPRING_DATASOURCE_USERNAME: admin
+      SPRING_DATASOURCE_PASSWORD: password123
+      SPRING_JPA_HIBERNATE_DDL_AUTO: update
+
+volumes:
+  postgres-data:
