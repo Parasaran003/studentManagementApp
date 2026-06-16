@@ -75,11 +75,11 @@ public class EnrollmentController {
         }
 
         enrollmentService.enrollStudentToCourses(enrollmentDTO);
-        redirectAttributes.addAttribute("message", "Enrollment successfully!!");
+        redirectAttributes.addFlashAttribute("message", " Course enrolled successfully!!");
 
         log.info("Post /enrollments/enrollCourse - Enrollment successfully.");
 
-        return "enroll-course";
+        return "redirect:/enrollments/showEnroll";
     }
     
     @GetMapping("/getStudentEnrollmentDetails/{id}")

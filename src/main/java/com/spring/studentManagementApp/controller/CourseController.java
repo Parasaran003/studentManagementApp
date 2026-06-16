@@ -63,7 +63,7 @@ public class CourseController {
 			return "add-course";
 		}
 		courseService.createCourse(courseDTO);
-		redirectAttributes.addAttribute("message", "Course created successfully.");
+		redirectAttributes.addFlashAttribute("message", "Course created successfully.");
 		log.info("/course/list - Create course action completed successfully.");
 		return "redirect:/course/list";
 	}
@@ -99,7 +99,7 @@ public class CourseController {
 		
 		courseService.updateCourse(id, courseDTO);
 		
-		redirectAttributes.addAttribute("message", "Course updated successfully.");
+		redirectAttributes.addFlashAttribute("message", "Course updated successfully.");
 		
 		log.info("/course/list - Update course action completed successfully.");
 		

@@ -21,6 +21,10 @@
                         </a>
                     </div>
                 </div>
+                    <!-- Flash message -->
+                    <div th:if="${message}" class="mb-3">
+                        <div class="alert alert-success" th:text="${message}"></div>
+                    </div>
 
                 <form th:action="@{/enrollments/enrollCourse}" method="POST" th:object="${enrollmentDto}">
                     <div class="row g-4">
